@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!--fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+    <!--Css-->
+    <link rel="stylesheet" href="style.css">
+    <!-- Alpinejs -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <!--Use axios to call the API-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!--JS-->
+    <script src="./pizza-cart-api.js" defer></script>
+</head>
+<body x-data="pizzaCart" >
+    <script>
+        document.addEventListener("alpine:init",() =>{
+    
+    Alpine.data('pizzaCart', () => {
+        return {
+             tittle:'Pizza Cart API',
+             pizzas:[],
+             username: 'Mandisa2526',
+             cartId: '',
+             init() {
+                 axios.get('https://pizza-api.projectcodex.net/api/pizzas').then(result => {
+                     this.pizzas = result.data.pizzas
+                     //console.log(result.data);
+                      
+                    // this.pizzas is declared on you AlpineJS Widget
+                 })
+             }
+         }
+    })
+
+
+});
+    </script>
+    <div class="container">
+        <div class="header" >
+            <h1 class="text-center" x-text="tittle"></h1>
+        </div>
+            
+            <div class="contents" >
+                <template x-for="pizza in pizzas">
+                    <div class="pizza">
+                        <h5 x-text="pizza.flavour"></h5>
+                        <span x-text="pizza.price"></span>
+                        <span x-text="pizza.size"></span>
+                    </div>
+
+                </template>
+                  
+            </div> 
+            
+        
+        <div class="footer" >
+        
+
+            <h2>Contact details</h2>
+
+            <div>
+                contact us at : 0717187709
+                info@pizza.co.za
+            </div>
+            
+        </div>
+    </div> 
+</body>
+</html>
